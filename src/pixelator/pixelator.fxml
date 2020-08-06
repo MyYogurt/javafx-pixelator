@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pixelator.Controller">
+   <children>
+      <Button fx:id="loadImageButton" layoutX="208.0" layoutY="136.0" mnemonicParsing="false" onAction="#buttonGetImage" prefHeight="128.0" prefWidth="184.0" text="Load Image" />
+   </children>
+</AnchorPane>
