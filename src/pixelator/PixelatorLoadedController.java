@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
@@ -22,12 +23,6 @@ public class PixelatorLoadedController {
 
     @FXML
     private ImageView imageView1, imageView2;
-
-    @FXML
-    private Label label;
-
-    @FXML
-    private TextField textField;
 
     private Stage mainStage;
 
@@ -47,11 +42,10 @@ public class PixelatorLoadedController {
      */
     public void setImage(Image path) {
         imageView1.setImage(path);
-        label.setText("The dimensions of the photo are: "+path.getWidth()+" x "+path.getHeight()+" You can set a new block count below. A smaller block count will result in a more pixelated image. The block count must evenly divide into both the width and the height of the image");
         width = (int) path.getWidth();
         height = (int) path.getHeight();
         int tempBlockSize = 10;
-        while (!Pixelate.verifyBlockSize(width, height, tempBlockSize))
+        while (!Pixelate.verifyBlockCount(width, height, tempBlockSize))
             tempBlockSize++;
         blockCount = tempBlockSize;
     }
@@ -86,19 +80,32 @@ public class PixelatorLoadedController {
      * Updates the block count and repixelates
      */
     public void updateBlockCount() {
+        FXMLLoader updateCountLoader = new FXMLLoader(getClass().getResource("updateBlockCount.fxml"));
+        Stage updateCountStage = new Stage();
+        updateCountStage.initModality(Modality.WINDOW_MODAL);
+        updateCountStage.initOwner(mainStage);
+        updateCountStage.setTitle("Update Block Count");
+        updateCountStage.setResizable(false);
         try {
-            int tempBlockSize = Integer.parseInt(textField.getText());
-            if (!Pixelate.verifyBlockSize(width, height, tempBlockSize))
-                showBlockSizeError();
-            else {
-                blockCount = tempBlockSize;
-                pixelate();
-            }
-        } catch (NumberFormatException numbex) {
-            showBlockSizeError();
+            Parent root = updateCountLoader.load();
+            UpdateBlockCountController updateBlockCountController = updateCountLoader.getController();
+            updateBlockCountController.setPixelatorLoadedController(this);
+            updateBlockCountController.setStage(updateCountStage);
+            updateBlockCountController.setLabel("The dimensions of your image are: "+width+" x "+height+"\nYou can set a new block count bellow. A smaller block count will result in a more pixelated image. The block count must evenly divide into both the width and height of your image.");
+            updateCountStage.setScene(new Scene(root, 300, 150));
+            updateCountStage.showAndWait();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    /**
+     * Sets the block count
+     * @param blockCount
+     */
+    public void setBlockCount(int blockCount) {
+        this.blockCount = blockCount;
+        pixelate();
     }
 
     /**

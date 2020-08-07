@@ -10,6 +10,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        primaryStage.setResizable(false);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("pixelator.fxml"));
         Parent root = loader.load();
         Controller controller = loader.getController();

@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pixelator.PixelatorLoadedController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pixelator.PixelatorLoadedController">
    <children>
-      <MenuBar>
+      <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#getNewImage" text="Open New Image" />
                   <MenuItem mnemonicParsing="false" onAction="#savePixelatedImage" text="Save Pixelated Image" />
-              <MenuItem mnemonicParsing="false" onAction="#exit" text="Close" />
+              <MenuItem mnemonicParsing="false" onAction="#exit" text="Exit" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#updateBlockCount" text="Update Block Count" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#showAbout" text="About" />
@@ -28,36 +31,21 @@
           </Menu>
         </menus>
       </MenuBar>
-      <HBox prefHeight="331.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
-         <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <ImageView fx:id="imageView1" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label prefHeight="17.0" prefWidth="304.0" text="Original" textAlignment="CENTER" />
-               </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <ImageView fx:id="imageView2" fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label prefHeight="17.0" prefWidth="366.0" text="Pixelated" textAlignment="CENTER" />
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-      <HBox prefHeight="109.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
-         <children>
-            <VBox prefHeight="72.0" prefWidth="602.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <Label fx:id="label" prefHeight="46.0" prefWidth="610.0" text="The dimensions of the photo are:  x  You can set a new block count below. A smaller block count will result in a more pixelated image. The block count must evenly divide into both the width and the heigh of the image" wrapText="true" VBox.vgrow="ALWAYS" />
-                  <HBox prefHeight="37.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <TextField fx:id="textField" prefHeight="155.0" prefWidth="466.0" HBox.hgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" onAction="#updateBlockCount" prefHeight="67.0" prefWidth="145.0" text="Update Block Count" HBox.hgrow="ALWAYS" />
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="29.0">
+         <center>
+            <ImageView fx:id="imageView1" fitHeight="351.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+         </center>
+         <bottom>
+            <Label text="Original" BorderPane.alignment="CENTER" />
+         </bottom>
+      </BorderPane>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
+         <center>
+            <ImageView fx:id="imageView2" fitHeight="351.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+         </center>
+         <bottom>
+            <Label text="Pixelated" BorderPane.alignment="CENTER" />
+         </bottom>
+      </BorderPane>
    </children>
-</VBox>
+</AnchorPane>

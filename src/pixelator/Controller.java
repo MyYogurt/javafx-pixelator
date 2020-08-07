@@ -1,11 +1,14 @@
 package pixelator;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.util.Arrays;
@@ -36,8 +39,8 @@ public class Controller {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("pixelatorLoaded.fxml"));
                 Parent root = loader.load();
                 PixelatorLoadedController controller = loader.getController();
-                controller.setImage(new Image(userFile.toURI().toURL().toString()));
                 controller.setMainStage(mainStage);
+                controller.setImage(new Image(userFile.toURI().toURL().toString()));
                 controller.pixelate();
                 mainStage.setScene(new Scene(root, 600, 400));
             } catch (Exception ioex) {

@@ -61,11 +61,11 @@ public class Pixelate {
      * Verifies the block size is compatible
      * @param width image width
      * @param height image height
-     * @param blocksize glocksize
-     * @return If blocksize is valid
+     * @param blockCount blockCount
+     * @return If blockCount is valid
      */
-    public static boolean verifyBlockSize(int width, int height, int blocksize) {
-        return width % blocksize == 0 && height % blocksize == 0;
+    public static boolean verifyBlockCount(int width, int height, int blockCount) {
+        return width % blockCount == 0 && height % blockCount == 0;
     }
 
     /**
