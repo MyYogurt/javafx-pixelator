@@ -1,14 +1,12 @@
 package pixelator;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.util.Arrays;
@@ -44,8 +42,16 @@ public class Controller {
                 controller.pixelate();
                 mainStage.setScene(new Scene(root, 600, 400));
             } catch (Exception ioex) {
-                ioex.printStackTrace();
+                loadingError();
             }
         }
+    }
+
+    public void loadingError() {
+        Alert blockSizeError = new Alert(Alert.AlertType.ERROR);
+        blockSizeError.setTitle("Error");
+        blockSizeError.setHeaderText("Error");
+        blockSizeError.setContentText("Error loading image");
+        blockSizeError.showAndWait();
     }
 }
