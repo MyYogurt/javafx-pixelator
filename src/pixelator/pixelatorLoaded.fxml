@@ -14,14 +14,14 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem mnemonicParsing="false" onAction="#getNewImage" text="Open New Image" />
-                  <MenuItem mnemonicParsing="false" onAction="#savePixelatedImage" text="Save Pixelated Image" />
+                  <MenuItem fx:id="openImageMenu" mnemonicParsing="false" onAction="#getNewImage" text="Open New Image" />
+                  <MenuItem fx:id="saveImageMenu" mnemonicParsing="false" onAction="#savePixelatedImage" text="Save Pixelated Image" />
               <MenuItem mnemonicParsing="false" onAction="#exit" text="Exit" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Edit">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#updateBlockCount" text="Update Block Count" />
+                <MenuItem fx:id="updateBlockCountMenu" mnemonicParsing="false" onAction="#updateBlockCount" text="Update Block Count" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -31,7 +31,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="29.0">
+      <BorderPane fx:id="borderPane1" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="300.0" AnchorPane.topAnchor="29.0">
          <center>
             <ImageView fx:id="imageView1" fitHeight="351.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
          </center>
@@ -39,7 +39,7 @@
             <Label text="Original" BorderPane.alignment="CENTER" />
          </bottom>
       </BorderPane>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
+      <BorderPane fx:id="borderPane2" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
          <center>
             <ImageView fx:id="imageView2" fitHeight="351.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
          </center>

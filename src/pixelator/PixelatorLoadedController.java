@@ -1,15 +1,22 @@
 package pixelator;
 
+import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -17,6 +24,7 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PixelatorLoadedController {
@@ -24,9 +32,21 @@ public class PixelatorLoadedController {
     @FXML
     private ImageView imageView1, imageView2;
 
+    private final ContextMenu contextMenu = new ContextMenu();
+
     private Stage mainStage;
 
+    private ArrayList<Integer> validBlockSizeValues;
+
     private int blockCount, width, height;
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 
     /**
      * Passes the main stage to this controller
@@ -34,6 +54,37 @@ public class PixelatorLoadedController {
      */
     public void setMainStage(Stage stage) {
         mainStage = stage;
+        MenuItem loadNewImage = new MenuItem("Load New Image");
+        MenuItem savePixelatedImage = new MenuItem("Save Pixelated Image");
+        MenuItem updateBlockCount = new MenuItem("Update Block Count");
+        loadNewImage.setOnAction((event) -> {
+            getNewImage();
+        });
+        savePixelatedImage.setOnAction((event) -> {
+            savePixelatedImage();
+        });
+        updateBlockCount.setOnAction((event) -> {
+            updateBlockCount();
+        });
+        contextMenu.getItems().addAll(loadNewImage, savePixelatedImage, updateBlockCount);
+        imageView1.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+            @Override
+            public void handle(ContextMenuEvent contextMenuEvent) {
+                contextMenu.show(imageView1, contextMenuEvent.getScreenX(), contextMenuEvent.getScreenY());
+            }
+        });
+        imageView1.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
+            contextMenu.hide();
+        });
+        imageView2.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+            @Override
+            public void handle(ContextMenuEvent contextMenuEvent) {
+                contextMenu.show(imageView2, contextMenuEvent.getScreenX(), contextMenuEvent.getScreenY());
+            }
+        });
+        imageView2.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
+            contextMenu.hide();
+        });
     }
 
     /**
@@ -48,6 +99,20 @@ public class PixelatorLoadedController {
         while (!Pixelate.verifyBlockCount(width, height, tempBlockSize))
             tempBlockSize++;
         blockCount = tempBlockSize;
+        Task<Void> getValidValues = new Task<Void>() {
+            @Override
+            public Void call() {
+                ArrayList<Integer> validValues = new ArrayList<Integer>();
+                int inc = width % 2 == 0 ? 1 : 2;
+                for (int counter = 1; counter < width; counter += inc) {
+                    if(width % counter == 0 && height % counter ==0)
+                        validValues.add(counter);
+                }
+                validBlockSizeValues = validValues;
+                return null;
+            }
+        };
+        new Thread(getValidValues).start();
     }
 
     /**
@@ -72,8 +137,15 @@ public class PixelatorLoadedController {
      * Pixelates the current image and displays it
      */
     public void pixelate() {
-        BufferedImage pixelated = Pixelate.pixelate(SwingFXUtils.fromFXImage(imageView1.getImage(), null), blockCount);
-        imageView2.setImage(SwingFXUtils.toFXImage(pixelated, null));
+        Task<Void> pixelateImage = new Task<Void>() {
+            @Override
+            public Void call() {
+                BufferedImage pixelated = Pixelate.pixelate(SwingFXUtils.fromFXImage(imageView1.getImage(), null), blockCount);
+                imageView2.setImage(SwingFXUtils.toFXImage(pixelated, null));
+                return null;
+            }
+        };
+        new Thread(pixelateImage).start();
     }
 
     /**
@@ -91,6 +163,7 @@ public class PixelatorLoadedController {
             UpdateBlockCountController updateBlockCountController = updateCountLoader.getController();
             updateBlockCountController.setPixelatorLoadedController(this);
             updateBlockCountController.setStage(updateCountStage);
+            updateBlockCountController.setValidValues(validBlockSizeValues);
             updateBlockCountController.setLabel("The dimensions of your image are: "+width+" x "+height+"\nYou can set a new block count bellow. A smaller block count will result in a more pixelated image. The block count must evenly divide into both the width and height of your image.");
             updateCountStage.setScene(new Scene(root, 300, 150));
             updateCountStage.showAndWait();
@@ -142,14 +215,13 @@ public class PixelatorLoadedController {
         File userFile = fileChooser.showOpenDialog(null);
         if (userFile != null) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("pixelatorLoaded.fxml"));
-                Parent root = loader.load();
-                PixelatorLoadedController controller = loader.getController();
-                controller.setImage(new Image(userFile.toURI().toURL().toString()));
-                controller.pixelate();
-                mainStage.setScene(new Scene(root, 600, 400));
+                setImage(new Image(userFile.toURI().toURL().toString()));
             } catch (Exception ioex) {
-                ioex.printStackTrace();
+                Alert blockSizeError = new Alert(Alert.AlertType.ERROR);
+                blockSizeError.setTitle("Error");
+                blockSizeError.setHeaderText("Error");
+                blockSizeError.setContentText("Error opening new image");
+                blockSizeError.showAndWait();
             }
         }
     }

@@ -42,7 +42,7 @@ public class Controller {
                 controller.pixelate();
                 mainStage.setScene(new Scene(root, 600, 400));
             } catch (Exception ioex) {
-                loadingError();
+                ioex.printStackTrace();
             }
         }
     }
