@@ -34,7 +34,7 @@ public class Controller {
         File userFile = fileChooser.showOpenDialog(null);
         if (userFile != null) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("pixelatorLoaded.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/pixelatorLoaded.fxml"));
                 Parent root = loader.load();
                 PixelatorLoadedController controller = loader.getController();
                 controller.setMainStage(mainStage);

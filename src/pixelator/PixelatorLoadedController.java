@@ -40,14 +40,6 @@ public class PixelatorLoadedController {
 
     private int blockCount, width, height;
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
     /**
      * Passes the main stage to this controller
      * @param stage main window
@@ -153,7 +145,7 @@ public class PixelatorLoadedController {
      * Updates the block count and repixelates
      */
     public void updateBlockCount() {
-        FXMLLoader updateCountLoader = new FXMLLoader(getClass().getResource("updateBlockCount.fxml"));
+        FXMLLoader updateCountLoader = new FXMLLoader(getClass().getResource("fxml/updateBlockCount.fxml"));
         Stage updateCountStage = new Stage();
         updateCountStage.initModality(Modality.WINDOW_MODAL);
         updateCountStage.initOwner(mainStage);
@@ -165,8 +157,8 @@ public class PixelatorLoadedController {
             updateBlockCountController.setPixelatorLoadedController(this);
             updateBlockCountController.setStage(updateCountStage);
             updateBlockCountController.setValidValues(validBlockSizeValues);
-            updateBlockCountController.setLabel("The dimensions of your image are: "+width+" x "+height+"\nYou can set a new block count bellow. A smaller block count will result in a more pixelated image. The block count must evenly divide into both the width and height of your image.");
-            updateCountStage.setScene(new Scene(root, 300, 150));
+            updateBlockCountController.setLabel("You can set a new block count bellow by double clicking on a value from the list below. A smaller block count will result in a more pixelated image.");
+            updateCountStage.setScene(new Scene(root, 300, 450));
             updateCountStage.showAndWait();
         } catch (Exception ex) {
             ex.printStackTrace();
