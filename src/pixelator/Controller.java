@@ -41,7 +41,7 @@ public class Controller {
                 controller.setImage(new Image(userFile.toURI().toURL().toString()));
                 mainStage.setScene(new Scene(root, 600, 400));
             } catch (Exception ioex) {
-                ioex.printStackTrace();
+                loadingError();
             }
         }
     }
