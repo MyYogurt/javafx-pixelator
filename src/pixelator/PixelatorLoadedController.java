@@ -154,10 +154,7 @@ public class PixelatorLoadedController {
         try {
             Parent root = updateCountLoader.load();
             UpdateBlockCountController updateBlockCountController = updateCountLoader.getController();
-            updateBlockCountController.setPixelatorLoadedController(this);
-            updateBlockCountController.setStage(updateCountStage);
-            updateBlockCountController.setValidValues(validBlockSizeValues);
-            updateBlockCountController.setLabel("You can set a new block count bellow by double clicking on a value from the list below. A smaller block count will result in a more pixelated image.");
+            updateBlockCountController.setData(new UpdateBlockCountData(this, updateCountStage, validBlockSizeValues, "You can set a new block count bellow by double clicking on a value from the list below. A smaller block count will result in a more pixelated image."));
             updateCountStage.setScene(new Scene(root, 300, 450));
             updateCountStage.showAndWait();
         } catch (Exception ex) {

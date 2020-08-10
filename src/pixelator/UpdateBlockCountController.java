@@ -3,17 +3,10 @@ package pixelator;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 public class UpdateBlockCountController {
 
@@ -27,8 +20,11 @@ public class UpdateBlockCountController {
 
     private Stage updateBlockCountStage;
 
-    public void setValidValues(ArrayList<Integer> list) {
-        valuesList.setItems(FXCollections.observableArrayList(list));
+    public void setData(UpdateBlockCountData data) {
+        updateBlockCountStage = data.getUpdateCountStage();
+        label.setText(data.getLabelText());
+        pixelatorLoadedController = data.getPixelatorLoadedController();
+        valuesList.setItems(FXCollections.observableArrayList(data.getValidValues()));
         valuesList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -39,18 +35,6 @@ public class UpdateBlockCountController {
                 }
             }
         });
-    }
-
-    public void setStage(Stage stage) {
-        updateBlockCountStage = stage;
-    }
-
-    public void setPixelatorLoadedController(PixelatorLoadedController pixelatorLoadedController) {
-        this.pixelatorLoadedController = pixelatorLoadedController;
-    }
-
-    public void setLabel(String text) {
-        label.setText(text);
     }
 
     public void updateBlockCountWithInt(int blockCount) {
