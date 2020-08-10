@@ -97,7 +97,7 @@ public class PixelatorLoadedController {
         height = (int) path.getHeight();
         int tempBlockSize = 10;
         while (!Pixelate.verifyBlockCount(width, height, tempBlockSize))
-            tempBlockSize++;
+            tempBlockSize--;
         blockCount = tempBlockSize;
         Task<Void> getValidValues = new Task<Void>() {
             @Override
@@ -113,6 +113,7 @@ public class PixelatorLoadedController {
             }
         };
         new Thread(getValidValues).start();
+        pixelate();
     }
 
     /**

@@ -39,7 +39,6 @@ public class Controller {
                 PixelatorLoadedController controller = loader.getController();
                 controller.setMainStage(mainStage);
                 controller.setImage(new Image(userFile.toURI().toURL().toString()));
-                controller.pixelate();
                 mainStage.setScene(new Scene(root, 600, 400));
             } catch (Exception ioex) {
                 ioex.printStackTrace();

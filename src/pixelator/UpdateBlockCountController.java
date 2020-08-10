@@ -50,12 +50,22 @@ public class UpdateBlockCountController {
         }
     }
 
+    public void updateBlockCountWithInt(int blockCount) {
+        try {
+            pixelatorLoadedController.setBlockCount(blockCount);
+            updateBlockCountStage.close();
+        } catch (Exception ex) {
+            pixelatorLoadedController.showBlockSizeError();
+        }
+    }
+
     public void viewValidBlockCounts() {
         try {
             FXMLLoader valuesLoader = new FXMLLoader(getClass().getResource("validValues.fxml"));
             Parent root = valuesLoader.load();
             ValidValuesController controller = valuesLoader.getController();
             controller.setList(validValues);
+            controller.setUpdateBlockCountController(this);
             Stage validValuesStage = new Stage();
             validValuesStage.setTitle("Valid Block Count Values");
             controller.setStage(validValuesStage, (int) updateBlockCountStage.getX(), (int) updateBlockCountStage.getY());
