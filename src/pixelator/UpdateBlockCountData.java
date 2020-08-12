@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 public class UpdateBlockCountData {
 
-    private PixelatorLoadedController pixelatorLoadedController;
+    private final PixelatorLoadedController pixelatorLoadedController;
 
-    private Stage updateCountStage;
+    private final Stage updateCountStage;
 
-    private ArrayList<Integer> validValues;
+    private final ArrayList<Integer> validValues;
 
-    private String labelText;
+    private final String labelText;
 
     public UpdateBlockCountData(PixelatorLoadedController controller, Stage stage, ArrayList<Integer> values, String text) {
         pixelatorLoadedController = controller;
