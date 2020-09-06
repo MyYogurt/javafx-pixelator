@@ -35,10 +35,10 @@ public class Pixelate {
                         counter++;
                     }
                 }
-                long raverage = (sumr/counter);
-                long gaverage = (sumg/counter);
-                long baverage = (sumb/counter);
-                Color averageColor = new Color((int) raverage, (int) gaverage, (int) baverage);
+                sumr /= counter;
+                sumg /= counter;
+                sumb /= counter;
+                Color averageColor = new Color((int) sumr, (int) sumg, (int) sumb);
                 rgbAverages.add(averageColor);
             }
         }
