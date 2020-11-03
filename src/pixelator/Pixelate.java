@@ -38,8 +38,7 @@ public class Pixelate {
                 sumr /= counter;
                 sumg /= counter;
                 sumb /= counter;
-                Color averageColor = new Color((int) sumr, (int) sumg, (int) sumb);
-                rgbAverages.add(averageColor);
+                rgbAverages.add(new Color((int) sumr, (int) sumg, (int) sumb));
             }
         }
         int ycounter = 0;
